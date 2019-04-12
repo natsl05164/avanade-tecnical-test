@@ -1,0 +1,130 @@
+﻿@{
+    ViewBag.Title = "Search Projects Page";
+}
+<div ng-controller="SearchProjectController as spc" ng-init="spc.init();"   @*ng-cloak*@>
+    <div class="control-sidebar control-sidebar-bg" ss-container>
+        <div class="sidebar-content ">
+            <div style="text-align:center">
+                <span class="sidebar-header">
+                    Hi Robinson
+                </span>
+
+            </div>
+
+            <div class="menu-button-box">
+                <a href="#" class="menu-button">
+                    <i class="fas fa-search"></i>
+                </a>
+                <span class="sidebar-header" style="text-align:center">
+                    Search
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="btn-add-card">
+        <a href="">
+            <i class="fas fa-plus"></i>
+        </a>
+    </div>
+    <div class="page-content">
+        <div class="page-header">
+            <div class="row">
+                <div class="form-group">
+                    <div class="search-input input-group">
+                        <input type="text" ng-model="svp.SearchInput" class="form-control" placeholder="Searh by project name, project start/end date" /><span class="input-group-addon">
+                            <a href="#" class="search-button" >
+                                <i class="fas fa-search i-small"></i>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div style="height:0;border-bottom:1px solid #EFEFEF">
+
+            </div>
+            <div class="row page-title">
+                <h5>My Projects</h5>
+                <div>
+                    <span>2 in total</span>
+                </div>
+            </div>
+        </div>
+        <div class="container clearfix">
+            <div class="card" ng-repeat="item in spc.lstProject|filter:svp.SearchInput"> 
+                <div class="flex-container">
+                    <div class="card-img">
+                        <img src="~/Media/logo/avanade-logo.jpg" />
+                    </div>
+                    <div class="card-content">
+                        <div class="row">
+
+                            <i class="i-medium fas fa-folder-open"></i><h4 style="display:inline"> <span ng-bind="item.Name"></span></h4>
+
+                        </div>
+                        <div class="row">
+                            <div class="tag" ng-repeat="i in item.lstKeyWord">
+                                <span ng-bind="i.KeyWord"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="label-top-small">
+                                <label>
+                                    Start/End Date
+                                </label>
+                                <div> 
+                                    <span ng-bind="item.StartDate|date: 'dd/MM/yyyy'"></span> to <span ng-bind="item.EndDate|date: 'dd/MM/yyyy'"></span>
+                                  
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="label-top-small" style="margin-right:20px">
+                                <label>
+                                    Estimated Cost
+                                </label>
+                                <div> 
+                                    <span ng-bind="item.EstimatedCost  || 0 | currency: 'RM '"></span> 
+                                </div>
+                            </div>
+                            <div class="label-top-small">
+                                <label>
+                                    Predicted Cost
+                                </label>
+                                <div>
+                                    <span ng-bind="item.PredictedCost  || 0 | currency: 'RM '"></span>  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+@section bottomScripts{
+    
+    <script type="text/javascript"  src="~/Content/app/controllers/searchprojectcontroller.js"></script>
+     <script type='text/javascript'>
+
+        $(".menu-button").click(function () {
+            $(document.querySelector('.control-sidebar')).addClass(
+            'sidebar-opened');
+        });
+
+        $(document).mouseup(function (e) {
+            var container = new Array();
+            container.push($('.control-sidebar'));
+
+            $.each(container, function (key, value) {
+                if (!$(value).is(e.target) // if the target of the click isn't the container...
+                    && $(value).has(e.target).length === 0) // ... nor a descendant of the container
+                {
+                    $(value).removeClass('sidebar-opened');
+                }
+            });
+        });
+    </script>
+}
